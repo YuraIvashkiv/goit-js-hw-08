@@ -1,17 +1,28 @@
 import { refs } from "./refs";
+import storage from "./storage";
 
 const feedbackEl = {};
+const LOCAL_KEY = "feedback-form-state";
 
 refs.form.addEventListener('input', onSaveForm);
 function onSaveForm({ target }) {
   const { name, value } = target
   
   feedbackEl[name] = value  
-  console.log(feedbackEl);
-    //  console.log(value)
+ storage.save(LOCAL_KEY, feedbackEl)
+};
+
+function loadFeedback() {
+  const savedFeedback = storage.load(LOCAL_KEY);
+  // console.log(savedFeedback);
+  if (savedFeedback) {
+    for (let el in savedFeedback) {
+      refs.form[el].value = savedFeedback[el];
+      feedbackEl[el]= savedFeedback[el]
+  }
 }
-
-
+};
+loadFeedback()
 
 // // Отримайте посилання на елементи форми
 // const emailInput = form.elements.email;
