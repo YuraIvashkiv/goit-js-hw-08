@@ -6,7 +6,7 @@ let feedbackEl = {};
 const LOCAL_KEY = "feedback-form-state";
 
 refs.form.addEventListener('input', throttle(onSaveForm, 500));
-efs.form.addEventListener('submit', onSendForm);
+refs.form.addEventListener('submit', onSendForm);
 
 function onSaveForm({ target }) {
   const { name, value } = target
