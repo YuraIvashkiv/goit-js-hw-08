@@ -1,10 +1,11 @@
 import { refs } from "./refs";
 import storage from "./storage";
 
-const feedbackEl = {};
+let feedbackEl = {};
 const LOCAL_KEY = "feedback-form-state";
 
 refs.form.addEventListener('input', onSaveForm);
+refs.form.addEventListener('submit', onSendForm)
 function onSaveForm({ target }) {
   const { name, value } = target
   
@@ -24,6 +25,20 @@ function loadFeedback() {
 };
 loadFeedback()
 
+function onSendForm(event) {
+  event.preventDefault();
+
+  if (!feedbackEl.email || !feedbackEl.message) {
+    alert('Заповніть усі поля');
+    return
+  } 
+  console.log(feedbackEl);
+
+  refs.form.reset();
+  feedbackEl = {};
+storage.remove(LOCAL_KEY)
+
+}
 // // Отримайте посилання на елементи форми
 // const emailInput = form.elements.email;
 // const messageInput = form.elements.message;
